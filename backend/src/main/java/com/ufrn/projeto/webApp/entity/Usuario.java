@@ -1,9 +1,7 @@
 package com.ufrn.projeto.webApp.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +15,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "USERS")
 @Getter @Setter
-public class User implements UserDetails {
+@AllArgsConstructor @NoArgsConstructor
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,6 +37,9 @@ public class User implements UserDetails {
 
     @Column(name = "IS_ACTIVE", nullable = false)
     private Boolean ativo = true;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tutor", orphanRemoval = true)
+    private List<Pet> pets;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

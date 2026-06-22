@@ -1,15 +1,11 @@
 package com.ufrn.projeto.webApp.repository;
 
-import com.ufrn.projeto.webApp.entity.Usuario;
+import com.ufrn.projeto.webApp.entity.LogAlimentacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<Usuario, UUID> {
-
-    Optional<Usuario> findByEmail(String email);
-
+public interface LogAlimentacaoRepository extends JpaRepository<LogAlimentacao, UUID> {
 }
