@@ -1,0 +1,40 @@
+jwt:
+  secret: ${JWT_KEY:ak02Qi9sRWZmVGM0TzR6VjNKOHBNSTVtckptOVhwWkZNUW5vSnFlOVFibGtiVXZObVhIRElEQ3RSZGxkVGE5eGdnTHlsZUVWazZ4ZXc5ZXdNVUVmOWc9PQ}
+  expiration:
+    ms:
+      access: 86400000        # 1 day
+      refresh: 604800000      # 7 days
+
+logging:
+  level:
+    root: INFO
+    com.ufrn: DEBUG
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: webApp
+
+  banner:
+    location: classpath:banner.txt
+
+  datasource:
+    url: jdbc:h2:mem:comedouro
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 123
+
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+
+  profiles:
+    active: dev
