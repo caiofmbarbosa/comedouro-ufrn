@@ -1,0 +1,24 @@
+package com.ufrn.projeto.webApp.dto;
+
+import java.time.LocalDate;
+
+import com.ufrn.projeto.webApp.enums.Porte;
+import com.ufrn.projeto.webApp.enums.Sexo;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
+public class PetDTO {
+	
+	    private String name;
+	    private String raca;
+	    private Porte porte;
+	    private Double peso;
+	    private LocalDate dataNascimento;
+	    private Sexo sexo;
+
+}
