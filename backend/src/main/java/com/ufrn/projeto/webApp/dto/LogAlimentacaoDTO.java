@@ -1,0 +1,17 @@
+package com.ufrn.projeto.webApp.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
+public class LogAlimentacaoDTO {
+
+    private Integer gramasLiberadas;
+    private LocalDateTime dataHora;
+
+}
