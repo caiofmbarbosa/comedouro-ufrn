@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 public class Reservatorio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id = 1L;
 
     @Column(name = "TOTAL_CAPACITY", nullable = false)
     private Integer capacidadeTotal;
