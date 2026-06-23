@@ -14,13 +14,11 @@ public class PetMapper {
 	private static final ModelMapper mapper = new ModelMapper();
 	
 	public static PetDTO responseDTO(Pet pet) {
-		
 		return mapper.map(pet, PetDTO.class);
 		
 	}
 	
 	public static Pet toEntity(PetRequestDTO pet) {
-		
 		return mapper.map(pet, Pet.class);
 		
 	}

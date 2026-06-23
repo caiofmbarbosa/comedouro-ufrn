@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, UUID> {
+    Pet getPetById(UUID id);
 }
