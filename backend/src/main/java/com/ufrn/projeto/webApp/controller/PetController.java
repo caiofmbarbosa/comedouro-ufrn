@@ -2,6 +2,7 @@ package com.ufrn.projeto.webApp.controller;
 
 import com.ufrn.projeto.webApp.dto.PetDTO;
 import com.ufrn.projeto.webApp.dto.PetRequestDTO;
+import com.ufrn.projeto.webApp.dto.PetRequestUpdateDTO;
 import com.ufrn.projeto.webApp.entity.Pet;
 import com.ufrn.projeto.webApp.entity.Usuario;
 import com.ufrn.projeto.webApp.mapper.PetMapper;
@@ -39,6 +40,19 @@ public class PetController {
                 .status(HttpStatus.CREATED)
                 .body(PetMapper.responseDTO(pet));
 	}
+
+    @PutMapping(value = "/update/{petId}")
+    @PreAuthorize("hasRole('TUTOR')")
+    public ResponseEntity<PetDTO> updatePet(@PathVariable UUID petId, @Valid @RequestBody PetRequestUpdateDTO dto) {
+        Pet pet = service.updatePet(petId, dto);
+        if (pet == null || pet.getId() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(PetMapper.responseDTO(pet));
+    }
 
     @DeleteMapping(value = "/delete/{petId}")
     @PreAuthorize("hasRole('TUTOR')")
