@@ -1,5 +1,13 @@
 package com.ufrn.projeto.webApp.service;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.ufrn.projeto.webApp.dto.LogAlimentacaoRequestDTO;
 import com.ufrn.projeto.webApp.entity.LogAlimentacao;
 import com.ufrn.projeto.webApp.entity.Pet;
@@ -8,15 +16,8 @@ import com.ufrn.projeto.webApp.entity.Usuario;
 import com.ufrn.projeto.webApp.mapper.LogAlimentacaoMapper;
 import com.ufrn.projeto.webApp.repository.LogAlimentacaoRepository;
 import com.ufrn.projeto.webApp.repository.ReservatorioRepository;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
