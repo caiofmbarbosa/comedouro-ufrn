@@ -91,7 +91,7 @@ public class TokenService {
                 .getBody()
                 .getExpiration();
 
-        return expiration.before(new Date());
+        return !expiration.before(new Date());
     }
 
 }

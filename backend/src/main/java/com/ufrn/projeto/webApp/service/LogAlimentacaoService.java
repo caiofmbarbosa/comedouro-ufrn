@@ -55,10 +55,14 @@ public class LogAlimentacaoService {
     }
 
     @Transactional
-    public LogAlimentacao createLog(UUID petId, LogAlimentacaoRequestDTO dto) {
+    public LogAlimentacao createLog(UUID petId, LogAlimentacaoRequestDTO dto, Usuario usuario) {
         Pet pet = petService.getPetById(petId);
         if (pet == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found or doesn't exist");
+        }
+
+        if (!pet.getTutor().getId().equals(usuario.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to create a log for this pet");
         }
 
         LogAlimentacao log = LogAlimentacaoMapper.toEntity(dto);
