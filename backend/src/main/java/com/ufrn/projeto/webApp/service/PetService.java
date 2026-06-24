@@ -1,10 +1,11 @@
 package com.ufrn.projeto.webApp.service;
 
-import com.ufrn.projeto.webApp.dto.PetDTO;
 import com.ufrn.projeto.webApp.dto.PetRequestDTO;
+import com.ufrn.projeto.webApp.dto.PetRequestUpdateDTO;
 import com.ufrn.projeto.webApp.entity.Pet;
 import com.ufrn.projeto.webApp.entity.Usuario;
 import com.ufrn.projeto.webApp.mapper.PetMapper;
+import com.ufrn.projeto.webApp.mapper.PetUpdateMapper;
 import com.ufrn.projeto.webApp.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PetService {
 
-    private final PetRepository petRepository;
+    private final PetRepository repository;
+    private final PetUpdateMapper modelMapper;
 
     @Transactional
     public Pet createPet(PetRequestDTO petDTO, Usuario usuario) {
@@ -29,7 +31,7 @@ public class PetService {
         Pet pet = PetMapper.toEntity(petDTO);
         pet.setTutor(usuario);
 
-        return petRepository.save(pet);
+        return repository.save(pet);
     }
 
     @Transactional
@@ -38,16 +40,28 @@ public class PetService {
             return;
         }
 
-        Pet pet = petRepository.getPetById(petId);
+        Pet pet = repository.getPetById(petId);
         if (!pet.getTutor().getId().equals(usuario.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can not exclude this pet.");
         }
 
-        petRepository.delete(pet);
+        repository.delete(pet);
+    }
+
+    public Pet updatePet(UUID petId, PetRequestUpdateDTO dto) {
+        Pet pet = repository.findById(petId)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Pet not found"
+                        ));
+
+        modelMapper.updatePet(dto, pet);
+        return repository.save(pet);
     }
 
     public Pet getPetById(UUID petId) {
-        Pet pet = petRepository.getPetById(petId);
+        Pet pet = repository.getPetById(petId);
         if (pet == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found.");
         }
