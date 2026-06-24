@@ -37,11 +37,11 @@ public class PetService {
 
     @Transactional
     public void deletePet(UUID petId, Usuario usuario) {
-        if (usuario == null) {
-            return;
+        Pet pet = repository.getPetById(petId);
+        if (pet == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
         }
 
-        Pet pet = repository.getPetById(petId);
         if (!pet.getTutor().getId().equals(usuario.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can not exclude this pet.");
         }
@@ -49,13 +49,16 @@ public class PetService {
         repository.delete(pet);
     }
 
-    public Pet updatePet(UUID petId, PetRequestUpdateDTO dto) {
+    public Pet updatePet(UUID petId, PetRequestUpdateDTO dto, Usuario usuario) {
         Pet pet = repository.findById(petId)
                 .orElseThrow(() ->
                         new ResponseStatusException(
                                 HttpStatus.NOT_FOUND,
                                 "Pet not found"
                         ));
+        if (!usuario.getId().equals(pet.getTutor().getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can not update this pet.");
+        }
 
         modelMapper.updatePet(dto, pet);
         return repository.save(pet);

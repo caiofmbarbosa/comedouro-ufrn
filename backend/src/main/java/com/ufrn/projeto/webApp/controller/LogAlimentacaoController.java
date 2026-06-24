@@ -44,9 +44,10 @@ public class LogAlimentacaoController {
     @PreAuthorize("hasRole('TUTOR')")
     public ResponseEntity<LogAlimentacaoDTO> createPetsLog(
             @PathVariable(value = "petId") UUID petId,
-            @Valid @RequestBody LogAlimentacaoRequestDTO dto
+            @Valid @RequestBody LogAlimentacaoRequestDTO dto,
+            @AuthenticationPrincipal Usuario usuario
     ) {
-        LogAlimentacao logAlimentacao = service.createLog(petId, dto);
+        LogAlimentacao logAlimentacao = service.createLog(petId, dto, usuario);
         if (logAlimentacao == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

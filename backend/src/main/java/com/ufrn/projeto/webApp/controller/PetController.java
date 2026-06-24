@@ -43,12 +43,16 @@ public class PetController {
 
     @PutMapping(value = "/update/{petId}")
     @PreAuthorize("hasRole('TUTOR')")
-    public ResponseEntity<PetDTO> updatePet(@PathVariable UUID petId, @Valid @RequestBody PetRequestUpdateDTO dto) {
-        Pet pet = service.updatePet(petId, dto);
+    public ResponseEntity<PetDTO> updatePet(
+            @PathVariable UUID petId,
+            @Valid @RequestBody PetRequestUpdateDTO dto,
+            @AuthenticationPrincipal Usuario usuario
+    ) {
+        Pet pet = service.updatePet(petId, dto, usuario);
         if (pet == null || pet.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(PetMapper.responseDTO(pet));
