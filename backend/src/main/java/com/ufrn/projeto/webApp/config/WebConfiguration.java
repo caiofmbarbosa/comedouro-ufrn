@@ -31,7 +31,9 @@ public class WebConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth ->
-                        auth.anyRequest().permitAll()
+                		auth
+                		.requestMatchers("/api/v1/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 );
 
         return http.build();

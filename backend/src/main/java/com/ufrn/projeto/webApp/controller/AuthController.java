@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufrn.projeto.webApp.dto.UserLoginDTO;
+import com.ufrn.projeto.webApp.dto.LoginRequestDTO;
+import com.ufrn.projeto.webApp.dto.LoginResponseDTO;
+import com.ufrn.projeto.webApp.dto.RegisterDTO;
 import com.ufrn.projeto.webApp.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -21,11 +23,21 @@ public class AuthController {
 	private final AuthService service;
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(
-			@Valid @RequestBody UserLoginDTO dto
+	public ResponseEntity<LoginResponseDTO> login(
+			@Valid @RequestBody LoginRequestDTO dto
 			) {
-		return ResponseEntity.status(HttpStatus.OK)
+		return ResponseEntity
+				.status(HttpStatus.OK)
 				.body(service.login(dto));
+	}
+	
+	@PostMapping(value = "/register")
+	public ResponseEntity<LoginResponseDTO> register(
+			@Valid @RequestBody RegisterDTO dto
+			) {
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(service.register(dto));
 	}
 
 }
