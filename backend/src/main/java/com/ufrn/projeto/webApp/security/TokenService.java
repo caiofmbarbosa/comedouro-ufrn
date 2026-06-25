@@ -1,15 +1,16 @@
 package com.ufrn.projeto.webApp.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
-import java.util.Date;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 @Service
 public class TokenService {
@@ -23,7 +24,7 @@ public class TokenService {
     @Value("${jwt.expiration.ms.refresh}")
     private long jwtExpirationRefreshMs;
 
-    private Key getKey() {
+    private SecretKey getKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(jwtSecret));
     }
 
@@ -32,11 +33,11 @@ public class TokenService {
         Date expiryDate = new Date(now.getTime() + jwtExpirationAccessMs);
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
+                .subject(userDetails.getUsername())
+                .issuedAt(now)
+                .expiration(expiryDate)
                 .claim("type", "access")
-                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .signWith(getKey())
                 .compact();
     }
 
@@ -45,11 +46,11 @@ public class TokenService {
         Date expiryDate = new Date(now.getTime() + jwtExpirationRefreshMs);
 
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
+                .subject(userDetails.getUsername())
+                .issuedAt(now)
+                .expiration(expiryDate)
                 .claim("type", "refresh")
-                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .signWith(getKey())
                 .compact();
     }
 
@@ -66,29 +67,29 @@ public class TokenService {
     }
 
     public String extractTokenType(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getKey())
+        return Jwts.parser()
+                .verifyWith(getKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .get("type", String.class);
     }
 
     public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getKey())
+        return Jwts.parser()
+                .verifyWith(getKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getSubject();
     }
 
     public boolean isTokenExpired(String token) {
-        Date expiration = Jwts.parserBuilder()
-                .setSigningKey(getKey())
+        Date expiration = Jwts.parser()
+                .verifyWith(getKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getExpiration();
 
         return !expiration.before(new Date());

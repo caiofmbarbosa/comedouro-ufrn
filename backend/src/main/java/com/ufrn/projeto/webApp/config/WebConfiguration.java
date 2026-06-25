@@ -28,11 +28,13 @@ public class WebConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .headers(h -> h.frameOptions(f -> f.disable()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth ->
                 		auth
                 		.requestMatchers("/api/v1/auth/**").permitAll()
+                		.requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

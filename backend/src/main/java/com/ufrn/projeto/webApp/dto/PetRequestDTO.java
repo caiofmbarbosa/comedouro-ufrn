@@ -2,10 +2,12 @@ package com.ufrn.projeto.webApp.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ufrn.projeto.webApp.enums.Porte;
 import com.ufrn.projeto.webApp.enums.Sexo;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,16 +23,17 @@ public class PetRequestDTO {
 		@NotBlank(message = "A raça do pet deve ser fornecida.")
 	    private String raca;
 		
-		@NotBlank(message = "O porte do pet (pequeno, médio ou grande), deve ser fornecido.")
+		@NotNull(message = "O porte do pet (pequeno, médio ou grande), deve ser fornecido.")
 	    private Porte porte;
 		
-		@NotBlank(message = "O peso atual do pet deve ser fornecido.")
+		@NotNull(message = "O peso atual do pet deve ser fornecido.")
 	    private Double peso;
 		
-		@NotBlank(message = "A data de nascimento do pet não pode estar vazia.")
+		@NotNull(message = "A data de nascimento do pet não pode estar vazia.")
+		@JsonFormat(pattern = "yyyy-MM-dd")
 	    private LocalDate dataNascimento;
 		
-		@NotBlank(message = "O sexo do pet deve ser fornecido.")
+		@NotNull(message = "O sexo do pet deve ser fornecido.")
 	    private Sexo sexo;
 
 }
