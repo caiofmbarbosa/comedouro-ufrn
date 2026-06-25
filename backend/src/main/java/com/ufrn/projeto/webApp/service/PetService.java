@@ -26,10 +26,6 @@ public class PetService {
 
     @Transactional
     public Pet createPet(PetRequestDTO petDTO, Usuario usuario) {
-        if (usuario == null) {
-            return null;
-        }
-
         Pet pet = PetMapper.toEntity(petDTO);
         pet.setTutor(usuario);
 

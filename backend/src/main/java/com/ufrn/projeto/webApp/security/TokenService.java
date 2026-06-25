@@ -57,13 +57,13 @@ public class TokenService {
     public boolean isAccessTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         final String tokenType = extractTokenType(token);
-        return (username.equals(userDetails.getUsername()) && isTokenExpired(token) && tokenType.equals("access"));
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && tokenType.equals("access"));
     }
 
     public boolean isRefreshTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         final String tokenType = extractTokenType(token);
-        return (username.equals(userDetails.getUsername()) && isTokenExpired(token) && tokenType.equals("refresh"));
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && tokenType.equals("refresh"));
     }
 
     public String extractTokenType(String token) {
@@ -92,7 +92,7 @@ public class TokenService {
                 .getPayload()
                 .getExpiration();
 
-        return !expiration.before(new Date());
+        return expiration.before(new Date());
     }
 
 }
