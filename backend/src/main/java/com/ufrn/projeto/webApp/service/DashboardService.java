@@ -6,6 +6,7 @@ import com.ufrn.projeto.webApp.entity.Pet;
 import com.ufrn.projeto.webApp.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DashboardService {
 
+    @Transactional(readOnly = true)
     public List<DashboardDTO> getDashboardData(Usuario usuario) {
         return usuario.getPets()
                 .stream()

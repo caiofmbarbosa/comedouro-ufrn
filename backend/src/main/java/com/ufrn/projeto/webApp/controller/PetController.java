@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +25,19 @@ import java.util.UUID;
 public class PetController {
 
     private final PetService service;
+
+    @GetMapping
+    @PreAuthorize("hasRole('TUTOR')")
+    public ResponseEntity<List<PetDTO>> getPets(
+            @AuthenticationPrincipal Usuario usuario
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.getPetsByTutor(usuario)
+                        .stream()
+                        .map(PetMapper::responseDTO)
+                        .toList());
+    }
 
 	@PostMapping(value = "/new")
     @PreAuthorize("hasRole('TUTOR')")

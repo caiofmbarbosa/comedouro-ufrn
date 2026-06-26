@@ -1,5 +1,6 @@
 package com.ufrn.projeto.webApp.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,15 @@ public class PetService {
         return repository.save(pet);
     }
 
+    @Transactional(readOnly = true)
+    public List<Pet> getPetsByTutor(Usuario usuario) {
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User must be authenticated.");
+        }
+
+        return repository.findAllByTutorAndAtivoTrueOrderByNameAsc(usuario);
+    }
+
     @Transactional
     public void deletePet(UUID petId, Usuario usuario) {
         Pet pet = repository.getPetById(petId);
@@ -46,6 +56,7 @@ public class PetService {
         repository.delete(pet);
     }
 
+    @Transactional
     public Pet updatePet(UUID petId, PetRequestUpdateDTO dto, Usuario usuario) {
         Pet pet = repository.findById(petId)
                 .orElseThrow(() ->
