@@ -7,6 +7,10 @@ export function toLocalDateTimeInput(date = new Date()) {
   return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
 }
 
+export function toBackendLocalDateTime(value: string) {
+  return value.length === 16 ? `${value}:00` : value;
+}
+
 export function formatDate(value: string) {
   return new Intl.DateTimeFormat("pt-BR").format(new Date(value));
 }

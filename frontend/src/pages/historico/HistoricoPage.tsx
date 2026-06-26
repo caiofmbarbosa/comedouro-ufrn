@@ -3,7 +3,7 @@ import { Filter, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { alimentacaoService } from "@features/alimentacao/alimentacaoService";
 import { estimateReservoirByLog } from "@features/dashboard/metrics";
 import { useDashboardData } from "@features/dashboard/useDashboardData";
-import { formatDate, formatTime, toInputDate, toLocalDateTimeInput } from "@shared/lib/date";
+import { formatDate, formatTime, toBackendLocalDateTime, toInputDate, toLocalDateTimeInput } from "@shared/lib/date";
 import { formatGrams, percentage } from "@shared/lib/number";
 import { Button } from "@shared/ui/Button";
 import { Field, TextInput } from "@shared/ui/Field";
@@ -34,7 +34,7 @@ export function HistoricoPage() {
     try {
       await alimentacaoService.create(selectedPetId, {
         gramasLiberadas: gramas,
-        dataHora
+        dataHora: toBackendLocalDateTime(dataHora)
       });
       setDataHora(toLocalDateTimeInput());
       await refresh();
