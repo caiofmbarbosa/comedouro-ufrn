@@ -1,5 +1,6 @@
 package com.ufrn.projeto.webApp.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class PetDTO {
     private String name;
     private String raca;
 	    private Porte porte;
-	    private Double peso;
+	    private BigDecimal peso;
 	    private LocalDate dataNascimento;
 	    private Sexo sexo;
 

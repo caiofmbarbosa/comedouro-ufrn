@@ -1,5 +1,6 @@
 package com.ufrn.projeto.webApp.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -27,7 +28,7 @@ public class PetRequestDTO {
 	    private Porte porte;
 		
 		@NotNull(message = "O peso atual do pet deve ser fornecido.")
-	    private Double peso;
+	    private BigDecimal peso;
 		
 		@NotNull(message = "A data de nascimento do pet não pode estar vazia.")
 		@JsonFormat(pattern = "yyyy-MM-dd")

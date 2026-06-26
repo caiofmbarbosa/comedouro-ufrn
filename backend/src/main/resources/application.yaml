@@ -1,5 +1,5 @@
 jwt:
-  secret: ${JWT_KEY:ak02Qi9sRWZmVGM0TzR6VjNKOHBNSTVtckptOVhwWkZNUW5vSnFlOVFibGtiVXZObVhIRElEQ3RSZGxkVGE5eGdnTHlsZUVWazZ4ZXc5ZXdNVUVmOWc9PQ}
+  secret: ${JWT_KEY}
   expiration:
     ms:
       access: 86400000        # 1 day
@@ -37,4 +37,4 @@ spring:
       ddl-auto: update
 
   profiles:
-    active: dev
+    active: hml

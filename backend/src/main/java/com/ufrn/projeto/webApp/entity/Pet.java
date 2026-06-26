@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +36,7 @@ public class Pet {
     private Porte porte;
 
     @Column(name = "WEIGHT", nullable = false)
-    private Double peso;
+    private BigDecimal peso;
 
     @Column(name = "BIRTH_DATE", nullable = false)
     private LocalDate dataNascimento;

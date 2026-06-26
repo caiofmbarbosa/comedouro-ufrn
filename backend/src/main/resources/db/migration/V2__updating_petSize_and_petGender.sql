@@ -1,0 +1,11 @@
+ALTER TABLE pets
+    ALTER COLUMN weight TYPE NUMERIC(6,2)
+        USING weight::NUMERIC(6,2);
+
+ALTER TABLE pets
+    ALTER COLUMN pet_size TYPE INTEGER
+        USING pet_size::INTEGER;
+
+ALTER TABLE pets
+    ALTER COLUMN gender TYPE INTEGER
+        USING gender::INTEGER;

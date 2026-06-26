@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter @Setter
@@ -16,7 +17,7 @@ public class PetRequestUpdateDTO {
 	    private String name;
 	    private String raca;
 	    private Porte porte;
-	    private Double peso;
+	    private BigDecimal peso;
 	    private LocalDate dataNascimento;
 	    private Sexo sexo;
 
