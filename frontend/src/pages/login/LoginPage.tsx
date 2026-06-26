@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { Eye, Lock, Mail, PawPrint, ShieldCheck, User } from "lucide-react";
+import { Eye, Lock, Mail, PawPrint, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@features/auth/AuthProvider";
 import { Button } from "@shared/ui/Button";
@@ -45,20 +45,8 @@ export function LoginPage() {
         <strong>Sistema de Alimentacao de Caes</strong>
       </header>
 
-      <section className="grid items-center gap-8 lg:grid-cols-[280px_minmax(0,1fr)] xl:gap-12">
-        <aside className="rounded-lg border border-neutral-300 bg-white p-7 shadow-soft">
-          <h2 className="mb-5 text-xl font-bold">Estoria Relacionada</h2>
-          <p className="leading-8">
-            <strong>EU6</strong> - Como usuario, quero acessar apenas meus proprios registros para manter a privacidade dos dados
-            alimentares do meu animal.
-          </p>
-          <div className="my-7 border-t border-dashed border-neutral-300" />
-          <p className="flex gap-3 leading-7">
-            <ShieldCheck size={22} /> A autenticacao garante acesso restrito aos dados do tutor e dos seus caes.
-          </p>
-        </aside>
-
-        <section className="grid overflow-hidden rounded-lg border border-neutral-300 bg-white shadow-soft lg:grid-cols-2">
+      <section className="grid items-center">
+        <section className="mx-auto grid w-full max-w-6xl overflow-hidden rounded-lg border border-neutral-300 bg-white shadow-soft lg:grid-cols-2">
           <div className="flex min-h-90 flex-col items-center justify-center border-b border-neutral-300 p-8 text-center lg:min-h-155 lg:border-b-0 lg:border-r lg:p-12">
             <PawPrint size={112} />
             <h1 className="mt-6 max-w-md text-3xl font-bold md:text-4xl">Sistema de Alimentacao de Caes</h1>
